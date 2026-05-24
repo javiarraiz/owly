@@ -31,15 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'owly',
-    'users',
-    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'owly',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -77,9 +77,18 @@ WSGI_APPLICATION = 'owly.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'owly_bd',
+        'USER': 'postgres',
+        'PASSWORD': '4863831',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        
     }
+
+    
 }
 
 
