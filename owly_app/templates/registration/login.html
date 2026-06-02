@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login - Owly</title>
+    </head>
+
+    <body>
+        <h2>Ingresar a Owly</h2>
+    
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Así se dibujan los campos de usuario y contraseña automáticamente -->
+            <button type="submit">Ingresar</button>
+        </form>
+    </body>
+</html>

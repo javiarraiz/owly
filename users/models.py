@@ -1,10 +1,10 @@
+from django.contrib.auth.models import AbstractUser # <-- Cambiamos la importación
 from django.db import models
 
-class User(models.Model):
+class User(AbstractUser): # <-- Aquí cambiamos models.Model por AbstractUser
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
 
     def __str__(self):
         return self.username
-
