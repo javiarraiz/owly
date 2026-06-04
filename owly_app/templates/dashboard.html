@@ -12,7 +12,7 @@
     <body>
         <div>
             <h1>owly</h1>
-                <p>Bienvenido, {{ user.username }}!</p>
+                <p>Bienvenido, {{ user.username }}</p>
         </div>
 
         <form action="{% url 'logout' %}" method="post"> <!-- El formulario envía una petición POST válida hacia /accounts/logout/.-->
