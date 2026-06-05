@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&uei5(%u2qea=j^x+kb*yig231dwa1=_br@zsy)==q)7$oblwc'
+SECRET_KEY = config('SECRET_KEY')
+#'django-insecure-&uei5(%u2qea=j^x+kb*yig231dwa1=_br@zsy)==q)7$oblwc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
+#True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
 
 
 # Application definition
@@ -45,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,20 +82,19 @@ WSGI_APPLICATION = 'owly.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}  
     #    'ENGINE': 'django.db.backends.sqlite3',
     #    'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'owly_bd',
-        'USER': 'postgres',
-        'PASSWORD': '4863831',
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': '5432',
-        
-    }
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'NAME': 'owly_bd',
+    #    'USER': 'postgres',
+    #    'PASSWORD': '4863831',
+    #    'HOST': os.environ.get('DB_HOST', 'localhost'),
+    #    'PORT': '5432',
 
-    
-}
 
 
 # Password validation
@@ -128,6 +132,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'main'
